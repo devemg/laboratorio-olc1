@@ -36,7 +36,7 @@ terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean,
 terminal String entero,decimal,cadena,identificador;
 non terminal INICIO,EXPRESION,VALOR,CONDICION;
 non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS,IFELSE;
-non terminal BLOQUESENTENCIAS;
+non terminal BLOQUESENTENCIAS, FOR, WHILE, INCREMENTO;
 //precedencia
 precedence left mayor,menor,igual;
 precedence right not;
@@ -51,15 +51,25 @@ INICIO ::= SENTENCIAS;
 
 SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
 |SENTENCIA puntoycoma
-|SENTENCIACONTROL ;
+|SENTENCIACONTROL;
 
 SENTENCIA ::= DECLARACION
     | ASIGNACION
     | LLAMADAMF;
 
-SENTENCIACONTROL ::= IFELSE;
+SENTENCIACONTROL ::= IFELSE
+    | FOR
+    | WHILE;
 
-BLOQUESENTENCIAS::= llave1 SENTENCIAS llave2;
+FOR::=pr_for par1 ASIGNACION puntoycoma CONDICION puntoycoma INCREMENTO par2 BLOQUESENTENCIAS; 
+
+INCREMENTO::= identificador mas mas;
+
+WHILE::= pr_while par1 CONDICION par2 BLOQUESENTENCIAS;
+
+
+BLOQUESENTENCIAS::= llave1 SENTENCIAS llave2
+    |llave1  llave2;
 
 IFELSE::= pr_if par1 CONDICION par2 BLOQUESENTENCIAS
     |pr_if par1 CONDICION par2 BLOQUESENTENCIAS pr_else BLOQUESENTENCIAS;
