@@ -1,0 +1,109 @@
+/*
+ * Organización de Lenguajes y Compiladores 1 A
+ * Aux. Emely García
+ */
+
+package Analizador; 
+import java_cup.runtime.*;
+
+parser code  
+{:
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+        
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+:} 
+terminal mas,menos,div,por;
+terminal par1,par2;
+terminal mayor,menor,igual,not;
+terminal puntoycoma,llave1,llave2,coma;
+
+terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean, pr_string, pr_func;
+terminal String entero,decimal,cadena,identificador;
+non terminal INICIO,EXPRESION,VALOR,CONDICION;
+non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal BLOQUESENTENCIAS, FOR, WHILE, INCREMENTO, FUNCION;
+//precedencia
+precedence left mayor,menor,igual;
+precedence right not;
+
+precedence left mas,menos;
+precedence left por,div;
+
+
+start with INICIO;
+
+INICIO ::= FUNCION;
+
+FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
+
+
+SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
+|SENTENCIA puntoycoma
+|SENTENCIACONTROL;
+
+SENTENCIA ::= DECLARACION
+    | ASIGNACION
+    | LLAMADAMF;
+
+SENTENCIACONTROL ::= IFELSE
+    | FOR
+    | WHILE;
+
+BLOQUESENTENCIAS::= llave1 SENTENCIAS llave2
+    |llave1  llave2;
+
+FOR::=pr_for par1 ASIGNACION puntoycoma CONDICION puntoycoma INCREMENTO par2 BLOQUESENTENCIAS; 
+
+INCREMENTO::= identificador mas mas;
+
+WHILE::= pr_while par1 CONDICION par2 BLOQUESENTENCIAS;
+
+IFELSE::= pr_if par1 CONDICION par2 BLOQUESENTENCIAS
+    |pr_if par1 CONDICION par2 BLOQUESENTENCIAS pr_else BLOQUESENTENCIAS;
+
+LLAMADAMF::= identificador par1 LISTAPARAMS par2;
+
+LISTAPARAMS::= LISTAPARAMS coma EXPRESION
+|EXPRESION
+|;
+
+ASIGNACION ::= identificador igual EXPRESION; 
+
+DECLARACION ::= TIPODATO identificador;
+
+TIPODATO ::= pr_number
+    | pr_string
+    | pr_boolean;
+
+EXPRESION::=EXPRESION:a mas:c EXPRESION:b
+    |EXPRESION:a menos:c EXPRESION:b
+    |EXPRESION:a div:c EXPRESION:b
+    |EXPRESION:a por:c EXPRESION:b
+    |VALOR:a;
+
+CONDICION::= EXPRESION:a mayor:c EXPRESION:b
+    |EXPRESION:a menor:c EXPRESION:b
+    |EXPRESION:a igual:c igual EXPRESION:b
+    |EXPRESION:a not:c igual EXPRESION:b
+    |VALOR;
+
+
+VALOR ::= cadena
+    |entero
+    |decimal
+    |identificador;

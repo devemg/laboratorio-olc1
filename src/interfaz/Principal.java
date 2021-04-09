@@ -5,6 +5,7 @@
  */
 package interfaz;
 
+import Analizador.AnalizadorLenguaje;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
@@ -347,7 +348,7 @@ public class Principal extends javax.swing.JFrame {
         tx_consola.setText("");
         //obteniendo texto   
       //  System.out.println("ANALIZANDO......");
-        /*AnalizadorLenguaje.getInstancia();
+        AnalizadorLenguaje.getInstancia();
         AnalizadorLenguaje.LimpiarInstancia();
         if (AnalizadorLenguaje.AnalizarCodigo(t.getText(), pestañas.getTitleAt(pestañas.getSelectedIndex()))) {
            // System.out.println("Código sin errores sintácticos-léxicos");
@@ -355,10 +356,10 @@ public class Principal extends javax.swing.JFrame {
         } else {
            // System.out.println("Código con errores sintácticos-léxicos");
             escribirErrorEnConsola("Finalizado con errores");
-            AnalizadorLenguaje.getErrores().stream().forEach((er) -> {
+           /* AnalizadorLenguaje.getErrores().stream().forEach((er) -> {
                 escribirErrorEnConsola(er.toString());
-            });
-        }*/
+            });*/
+        }
     }
 
     //PESTAÑAS
