@@ -73,3 +73,5 @@ while
 Llamada a método 
 **clases
 
+## Diagrama de clases 
+![image](https://github.com/devemg/laboratorio-olc1/blob/master/images/clases.png)
