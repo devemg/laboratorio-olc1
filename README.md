@@ -42,15 +42,16 @@ tipos de datos sean compatibles.
 #### Operaciones
 El lenguaje provee un soporte para las siguientes operaciones: 
 #### Aritmeticas
- Son operaciones entre valores cuantitativos. Cuentan con dos operadores y un signo que identifica la operación a realizar. Las operaciones soportadas son las siguientes. 
+ Son operaciones entre valores cuantitativos. Cuentan con dos operadores y un signo que identifica la operación a realizar. 
+ ##### Sintáxis
+ < EXPRESION > < SIGNO > < EXPRESION >
+ 
+ Las operaciones soportadas son las siguientes. 
  
  - Suma 
  - Resta 
  - Multiplicación 
  - División
- 
- ##### Sintáxis
- < EXPRESION > < SIGNO > < EXPRESION >
  
 ##### Relacionales
 Son operaciones que se utilizan para comparar dos valores. Si el resultado de la comparación es correcto la expresión considerada es verdadera, en caso contrario es falsa. 
