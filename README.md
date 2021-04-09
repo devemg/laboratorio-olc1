@@ -20,8 +20,7 @@ Los Tipos de datos primitivos soportados por el lenguaje son los siguientes:
 
 |Nombre   |Uso   |Valor por Defecto   |
 |---      |---      |---              |
-|Entero   |int      |0                |
-|Decimal  |double   |0.0              |
+|Entero o Decimal   |number      |0                |
 |Booleano |boolean  |false            |
 |Cadena   |string   |""               |
 ## Sentencias 
