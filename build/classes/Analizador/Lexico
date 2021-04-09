@@ -48,7 +48,6 @@ BLANCOS=[ \t\r\f\n]+
 "}" {return new Symbol(sym.llave2,yycolumn,yyline,yytext());}
 
 "," {return new Symbol(sym.coma,yycolumn,yyline,yytext());}
-";" {return new Symbol(sym.ptcoma,yycolumn,yyline,yytext());}
 
 
 "number" {return new Symbol(sym.pr_number,yyline,yychar, yytext());} 

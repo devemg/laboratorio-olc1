@@ -35,7 +35,7 @@ terminal puntoycoma,llave1,llave2,coma,ptcoma;
 terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean, pr_string;
 terminal String entero,decimal,cadena,identificador;
 non terminal INICIO,EXPRESION,VALOR,CONDICION;
-non terminal SENTENCIAS, SENTENCIA, DECLARACION,ASIGNACION,TIPODATO;
+non terminal SENTENCIAS, SENTENCIA, DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS;
 
 //precedencia
 precedence left mayor,menor,igual;
@@ -49,11 +49,18 @@ start with INICIO;
 
 INICIO ::= SENTENCIAS;
 
-SENTENCIAS ::= SENTENCIAS SENTENCIA ptcoma
-|SENTENCIA ptcoma;
+SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
+|SENTENCIA puntoycoma;
 
 SENTENCIA ::= DECLARACION
-    | ASIGNACION;
+    | ASIGNACION
+    | LLAMADAMF;
+
+LLAMADAMF::= identificador par1 LISTAPARAMS par2;
+
+LISTAPARAMS::= LISTAPARAMS coma EXPRESION
+|EXPRESION
+|;
 
 ASIGNACION ::= identificador igual EXPRESION; 
 
@@ -62,7 +69,6 @@ DECLARACION ::= TIPODATO identificador;
 TIPODATO ::= pr_number
     | pr_string
     | pr_boolean;
-
 
 EXPRESION::=EXPRESION:a mas:c EXPRESION:b
     |EXPRESION:a menos:c EXPRESION:b
@@ -79,4 +85,5 @@ CONDICION::= EXPRESION:a mayor:c EXPRESION:b
 
 VALOR ::= cadena
     |entero
-    |decimal;
+    |decimal
+    |identificador;
