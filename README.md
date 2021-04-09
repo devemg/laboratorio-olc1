@@ -63,16 +63,16 @@ Las operaciones soportadas son las siguientes:
 
 #### Sentencias de control
 Estas sentencias modifican el flujo del programa de acuerdo a ciertos criterios a evaluar. 
-#### If else
+##### If else
 
+#### Funciones Nativas
+##### Función de imprimir
+#### Ciclos
+##### For 
+##### while
 
-Función de imprimir
-Ciclos
-For 
-while
- Metodos (parametros)
-Llamada a método 
-**clases
+#### Metodos
+##### Llamada a método 
 
 ## Diagrama de clases 
 ![image](https://github.com/devemg/laboratorio-olc1/blob/master/images/clases.png)
