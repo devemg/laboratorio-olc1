@@ -1,7 +1,6 @@
 /*
- * Clase 3
- * Organización de Lenguajes y Compiladores 1 "A"
- * Aux. José Puac
+ * Organización de Lenguajes y Compiladores 1 A
+ * Aux. Emely García
  */
 
 package Analizador;
@@ -27,37 +26,44 @@ CADENA = \"[^\"]*\"
 %%
 
 
-";" {return new Symbol(sym.PTCOMA,yyline,yychar, yytext());} 
-"(" {return new Symbol(sym.PARIZQ,yyline,yychar, yytext());} 
-")" {return new Symbol(sym.PARDER,yyline,yychar, yytext());} 
 
-"+" {return new Symbol(sym.MAS,yyline,yychar, yytext());} 
-"-" {return new Symbol(sym.MENOS,yyline,yychar, yytext());} 
-"*" {return new Symbol(sym.POR,yyline,yychar, yytext());} 
-"/" {return new Symbol(sym.DIVIDIDO,yyline,yychar, yytext());} 
+"+" {return new Symbol(sym.mas,yycolumn,yyline,yytext());}
+"-" {return new Symbol(sym.menos,yycolumn,yyline,yytext());}
+"*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
+"/" {return new Symbol(sym.div,yycolumn,yyline,yytext());}
 
-">" {return new Symbol(sym.MAYORQ,yyline,yychar, yytext());} 
-"<" {return new Symbol(sym.MENORQ,yyline,yychar, yytext());} 
-"=" {return new Symbol(sym.IGUAL,yyline,yychar, yytext());} 
-"!=" {return new Symbol(sym.DIFERENTE,yyline,yychar, yytext());} 
+"(" {return new Symbol(sym.par1,yycolumn,yyline,yytext());}
+")" {return new Symbol(sym.par2,yycolumn,yyline,yytext());}
+
+"<" {return new Symbol(sym.menor,yycolumn,yyline,yytext());}
+">" {return new Symbol(sym.mayor,yycolumn,yyline,yytext());}
+"=" {return new Symbol(sym.igual,yycolumn,yyline,yytext());}
+"!" {return new Symbol(sym.not,yycolumn,yyline,yytext());}
+
+";" {return new Symbol(sym.puntoycoma,yycolumn,yyline,yytext());}
+
+"{" {return new Symbol(sym.llave1,yycolumn,yyline,yytext());}
+"}" {return new Symbol(sym.llave2,yycolumn,yyline,yytext());}
+
+"," {return new Symbol(sym.coma,yycolumn,yyline,yytext());}
 
 
-"number" {return new Symbol(sym.PR_NUMBER,yyline,yychar, yytext());} 
-"boolean" {return new Symbol(sym.PR_BOOLEAN,yyline,yychar, yytext());} 
-"string" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
+"number" {return new Symbol(sym.pr_number,yyline,yychar, yytext());} 
+"boolean" {return new Symbol(sym.pr_boolean,yyline,yychar, yytext());} 
+"string" {return new Symbol(sym.pr_string,yyline,yychar, yytext());} 
 
-"if" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
-"else" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
-"for" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
-"while" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
-"print" {return new Symbol(sym.PR_STRING,yyline,yychar, yytext());} 
+"if" {return new Symbol(sym.pr_if,yyline,yychar, yytext());} 
+"else" {return new Symbol(sym.pr_else,yyline,yychar, yytext());} 
+"for" {return new Symbol(sym.pr_for,yyline,yychar, yytext());} 
+"while" {return new Symbol(sym.pr_while,yyline,yychar, yytext());} 
+"print" {return new Symbol(sym.pr_print,yyline,yychar, yytext());} 
 
 \n {yychar=1;}
 
 {BLANCOS} {} 
-{D} {return new Symbol(sym.ENTERO,yyline,yychar, yytext());} 
-{DD} {return new Symbol(sym.DECIMAL,yyline,yychar, yytext());} 
-{CADENA} {return new Symbol(sym.CADENA,yyline,yychar, yytext());} 
+{D} {return new Symbol(sym.entero,yyline,yychar, yytext());} 
+{DD} {return new Symbol(sym.decimal,yyline,yychar, yytext());} 
+{CADENA} {return new Symbol(sym.cadena,yyline,yychar, yytext());} 
 
 . {
     System.out.println("Este es un error lexico: "+yytext()+
