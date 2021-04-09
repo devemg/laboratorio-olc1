@@ -30,13 +30,13 @@ parser code
 terminal mas,menos,div,por;
 terminal par1,par2;
 terminal mayor,menor,igual,not;
-terminal puntoycoma,llave1,llave2,coma,ptcoma;
+terminal puntoycoma,llave1,llave2,coma;
 
 terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean, pr_string;
 terminal String entero,decimal,cadena,identificador;
 non terminal INICIO,EXPRESION,VALOR,CONDICION;
-non terminal SENTENCIAS, SENTENCIA, DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS;
-
+non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal BLOQUESENTENCIAS;
 //precedencia
 precedence left mayor,menor,igual;
 precedence right not;
@@ -50,11 +50,19 @@ start with INICIO;
 INICIO ::= SENTENCIAS;
 
 SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
-|SENTENCIA puntoycoma;
+|SENTENCIA puntoycoma
+|SENTENCIACONTROL ;
 
 SENTENCIA ::= DECLARACION
     | ASIGNACION
     | LLAMADAMF;
+
+SENTENCIACONTROL ::= IFELSE;
+
+BLOQUESENTENCIAS::= llave1 SENTENCIAS llave2;
+
+IFELSE::= pr_if par1 CONDICION par2 BLOQUESENTENCIAS
+    |pr_if par1 CONDICION par2 BLOQUESENTENCIAS pr_else BLOQUESENTENCIAS;
 
 LLAMADAMF::= identificador par1 LISTAPARAMS par2;
 
