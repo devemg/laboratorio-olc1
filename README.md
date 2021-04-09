@@ -54,11 +54,13 @@ El lenguaje provee un soporte para las siguientes operaciones:
  < EXPRESION > < SIGNO > < EXPRESION >
  
 ##### Relacionales
-Son operaciones que se utilizan para comparar dos valores de tipo booleano. Si el resultado de la comparación es correcto la expresión considerada es verdadera, en caso contrario es falsa. 
+Son operaciones que se utilizan para comparar dos valores. Si el resultado de la comparación es correcto la expresión considerada es verdadera, en caso contrario es falsa. 
 
 Las operaciones soportadas son las siguientes: 
-- AND
-- OR
+- Igual
+- Diferente
+- Mayor
+- Menor
 
 #### Sentencias de control
 Estas sentencias modifican el flujo del programa de acuerdo a ciertos criterios a evaluar. 
