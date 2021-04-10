@@ -5,7 +5,8 @@
 
 package Analizador; 
 import java_cup.runtime.*;
-
+import AST.*;
+import java.util.ArrayList;
 parser code  
 {:
     /**
@@ -32,7 +33,7 @@ terminal par1,par2;
 terminal mayor,menor,igual,not;
 terminal puntoycoma,llave1,llave2,coma;
 
-terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean, pr_string, pr_func;
+terminal String pr_if,pr_else, pr_for, pr_while, pr_number, pr_boolean, pr_string, pr_func;
 terminal String entero,decimal,cadena,identificador;
 non terminal INICIO,EXPRESION,VALOR,CONDICION;
 non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS,IFELSE;
@@ -47,18 +48,28 @@ precedence left por,div;
 
 start with INICIO;
 
-INICIO ::= FUNCION;
+INICIO ::= SENTENCIAS:lista {:
+AnalizadorLenguaje.sentencias = (ArrayList<Sentencia>) lista;
+:};
 
 FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
 
 
-SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
-|SENTENCIA puntoycoma
+SENTENCIAS ::= SENTENCIAS:sent SENTENCIA:b puntoycoma {:
+ArrayList<Sentencia> lista = (ArrayList<Sentencia>) sent;
+lista.add((Sentencia)b); 
+RESULT = lista;
+:}
+|SENTENCIA:a puntoycoma {: 
+ArrayList<Sentencia> lista = new ArrayList();
+lista.add((Sentencia)a); 
+RESULT = lista;
+:}
 |SENTENCIACONTROL;
 
 SENTENCIA ::= DECLARACION
     | ASIGNACION
-    | LLAMADAMF;
+    | LLAMADAMF:a {: RESULT = a; :};
 
 SENTENCIACONTROL ::= IFELSE
     | FOR
@@ -76,11 +87,22 @@ WHILE::= pr_while par1 CONDICION par2 BLOQUESENTENCIAS;
 IFELSE::= pr_if par1 CONDICION par2 BLOQUESENTENCIAS
     |pr_if par1 CONDICION par2 BLOQUESENTENCIAS pr_else BLOQUESENTENCIAS;
 
-LLAMADAMF::= identificador par1 LISTAPARAMS par2;
+LLAMADAMF::= identificador:nombre par1 LISTAPARAMS:array par2 {: RESULT = new LlamadaMetodo((ArrayList<Expresion>) array,(String) nombre);:};
 
-LISTAPARAMS::= LISTAPARAMS coma EXPRESION
-|EXPRESION
-|;
+LISTAPARAMS::= LISTAPARAMS:params coma EXPRESION:b {: 
+ArrayList<Expresion> lista = (ArrayList<Expresion>) params;
+lista.add((Expresion)b); 
+RESULT = lista;
+:}
+|EXPRESION:a 
+{: 
+ArrayList<Expresion> lista = new ArrayList();
+lista.add((Expresion)a); 
+RESULT = lista;
+:}
+| {: RESULT = new ArrayList(); :};
+
+
 
 ASIGNACION ::= identificador igual EXPRESION; 
 
@@ -90,11 +112,11 @@ TIPODATO ::= pr_number
     | pr_string
     | pr_boolean;
 
-EXPRESION::=EXPRESION:a mas:c EXPRESION:b
-    |EXPRESION:a menos:c EXPRESION:b
-    |EXPRESION:a div:c EXPRESION:b
-    |EXPRESION:a por:c EXPRESION:b
-    |VALOR:a;
+EXPRESION::=EXPRESION:a mas:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.SUMA); :}
+    |EXPRESION:a menos:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.RESTA); :}
+    |EXPRESION:a div:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.DIVISION); :}
+    |EXPRESION:a por:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.MULTIPLICACION); :}
+    |VALOR:a {: RESULT = a; :} ;
 
 CONDICION::= EXPRESION:a mayor:c EXPRESION:b
     |EXPRESION:a menor:c EXPRESION:b
@@ -103,7 +125,7 @@ CONDICION::= EXPRESION:a mayor:c EXPRESION:b
     |VALOR;
 
 
-VALOR ::= cadena
-    |entero
-    |decimal
-    |identificador;
+VALOR ::= cadena:a {: RESULT = new OperacionAritmeticas(TipoOperacion.CADENA,(String)a); :}
+    |entero:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a); :}
+    |decimal:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a); :}
+    |identificador:a {: RESULT = new OperacionAritmeticas(TipoOperacion.ID,(String)a); :};
