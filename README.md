@@ -44,7 +44,9 @@ Una variable puede cambiar su valor a lo largo de la ejecución, para esto se ut
 tipos de datos sean compatibles.
 
 ##### Sintáxis
-  ```< identificador > = < EXPRESION >;```
+  ```
+  < identificador > = < EXPRESION >;
+  ```
 
 #### Operaciones
 El lenguaje provee un soporte para las siguientes operaciones: 
