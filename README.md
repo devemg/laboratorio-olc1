@@ -1,7 +1,7 @@
 # laboratorio-olc1
 Interprete de ejemplo. Laboratorio OLC1 1s 2021
 
-# Branches 
+# Ramas del Repósitorio 
 - master: Contiene la implementación completa
 - interfaz-grafica: Contiene solamente la interfaz gráfica en java
 - gramatica: Contiene la implementación de la gramática. 
