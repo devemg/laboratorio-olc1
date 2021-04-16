@@ -5,8 +5,10 @@
  */
 package Analizador;
 
+import AST.Sentencia;
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.io.StringReader;
 public class AnalizadorLenguaje {
     private static AnalizadorLenguaje analizador;
     
+    public static ArrayList<Sentencia> sentencias;
     
  public static boolean AnalizarCodigo(String entrada, String ubicacion) {
         try {
@@ -22,10 +25,19 @@ public class AnalizadorLenguaje {
                     new Lexico(new BufferedReader(new StringReader(entrada))));
             //analizando
             sin.parse();
+            
+            int i; 
+            for(i = 0; i< AnalizadorLenguaje.sentencias.size(); i++){
+                AnalizadorLenguaje.sentencias.get(i).Ejecutar();
+            }
+            
             System.out.println("Sin errores");
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
         }
+        
+        
+        
        return true;
     }
 
