@@ -7,6 +7,7 @@ package Analizador;
 import java_cup.runtime.*;
 import AST.*;
 import java.util.ArrayList;
+import AST.Sentencias.*;
 parser code  
 {:
     /**
@@ -67,6 +68,7 @@ RESULT = lista;
 ;
 
 SENTENCIA ::= DECLARACION :a {: RESULT = a; :}
+    | ASIGNACION:a {: RESULT = a; :}
     | LLAMADAMF:a {: RESULT = a; :};
 
 SENTENCIACONTROL ::= IFELSE
@@ -102,7 +104,9 @@ RESULT = lista;
 
 
 
-ASIGNACION ::= identificador igual EXPRESION; 
+ASIGNACION ::= identificador:a igual EXPRESION:b {:
+RESULT = new Asignacion(a,(Expresion)b);
+:}; 
 
 DECLARACION ::= TIPODATO:tipo identificador:nombre {: RESULT = new Declaracion((TipoDatoSimbolo)tipo,nombre,tipoleft,tiporight);  :};
 

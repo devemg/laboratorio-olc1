@@ -59,9 +59,24 @@ public class OperacionAritmeticas extends Expresion {
                 return Double.parseDouble(this.valor);
             case  ID: 
                 // consultar TS 
-                //retornar el valor
-                break;
+                int i; 
+                String valorFinal = "";
+                boolean existe = false; 
+                for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
+                    if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(this.valor)){
+                            // es un error 
+                            //Analizador.AnalizadorLenguaje.
+                            valorFinal = Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getValor();
+                           existe = true; 
+                           break;
+                      }
+                }
                 
+                if(!existe){
+                    // error 
+                }
+                //retornar el valor
+                return valorFinal;
         }
         return null;
     }
