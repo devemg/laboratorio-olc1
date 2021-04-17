@@ -54,7 +54,6 @@ AnalizadorLenguaje.sentencias = (ArrayList<Sentencia>) lista;
 
 FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
 
-
 SENTENCIAS ::= SENTENCIAS:sent SENTENCIA:b puntoycoma {:
 ArrayList<Sentencia> lista = (ArrayList<Sentencia>) sent;
 lista.add((Sentencia)b); 
@@ -65,10 +64,9 @@ ArrayList<Sentencia> lista = new ArrayList();
 lista.add((Sentencia)a); 
 RESULT = lista;
 :}
-|SENTENCIACONTROL;
+;
 
-SENTENCIA ::= DECLARACION
-    | ASIGNACION
+SENTENCIA ::= DECLARACION :a {: RESULT = a; :}
     | LLAMADAMF:a {: RESULT = a; :};
 
 SENTENCIACONTROL ::= IFELSE
@@ -106,11 +104,11 @@ RESULT = lista;
 
 ASIGNACION ::= identificador igual EXPRESION; 
 
-DECLARACION ::= TIPODATO identificador;
+DECLARACION ::= TIPODATO:tipo identificador:nombre {: RESULT = new Declaracion((TipoDatoSimbolo)tipo,nombre,tipoleft,tiporight);  :};
 
-TIPODATO ::= pr_number
-    | pr_string
-    | pr_boolean;
+TIPODATO ::= pr_number {: RESULT = TipoDatoSimbolo.NUMERO; :}
+    | pr_string {: RESULT = TipoDatoSimbolo.CADENA; :}
+    | pr_boolean {: RESULT = TipoDatoSimbolo.BOOLEANO; :};
 
 EXPRESION::=EXPRESION:a mas:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.SUMA); :}
     |EXPRESION:a menos:c EXPRESION:b {: RESULT = new OperacionAritmeticas((Expresion)a,(Expresion)b,TipoOperacion.RESTA); :}
@@ -121,8 +119,7 @@ EXPRESION::=EXPRESION:a mas:c EXPRESION:b {: RESULT = new OperacionAritmeticas((
 CONDICION::= EXPRESION:a mayor:c EXPRESION:b
     |EXPRESION:a menor:c EXPRESION:b
     |EXPRESION:a igual:c igual EXPRESION:b
-    |EXPRESION:a not:c igual EXPRESION:b
-    |VALOR;
+    |EXPRESION:a not:c igual EXPRESION:b;
 
 
 VALOR ::= cadena:a {: RESULT = new OperacionAritmeticas(TipoOperacion.CADENA,(String)a); :}
