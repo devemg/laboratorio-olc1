@@ -6,6 +6,7 @@
 package Analizador;
 
 import AST.Sentencia;
+import AST.TablaSimbolos;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  */
 public class AnalizadorLenguaje {
     private static AnalizadorLenguaje analizador;
-    public static ArrayList<Simbolo> tablaSimbolos; 
+    public static TablaSimbolos tablaSimbolos; 
     public static ArrayList<Sentencia> sentencias;
     
  public static boolean AnalizarCodigo(String entrada, String ubicacion) {
@@ -45,7 +46,7 @@ public class AnalizadorLenguaje {
     public static AnalizadorLenguaje getInstancia() {
         if (analizador == null) {
             analizador = new AnalizadorLenguaje();
-            tablaSimbolos = new ArrayList<>();
+            tablaSimbolos = new TablaSimbolos();
         }
         return analizador;
     }

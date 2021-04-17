@@ -32,26 +32,18 @@ public class Declaracion extends Sentencia {
     public void Ejecutar() {
         
 
-        int i; 
-        for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
-            if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(this.nombre)){
-                    // es un error 
-                    //Analizador.AnalizadorLenguaje.
-                    
-                   return;
-              }
-        }
-        
-        // agregar a TS 
-        
-        Simbolo sim = null;
-        String determinado = this.getValorDeterminado(this.tipo);
-        if(determinado != null){
-           sim = new Simbolo(this.nombre,this.tipo,this.linea,this.columna,determinado);
-        }
-        if(sim != null){
-            Analizador.AnalizadorLenguaje.tablaSimbolos.add(sim);
-        }
+       if(!Analizador.AnalizadorLenguaje.tablaSimbolos.existeVariable(nombre)){
+           Simbolo sim = null;
+            String determinado = this.getValorDeterminado(this.tipo);
+            if(determinado != null){
+               sim = new Simbolo(this.nombre,this.tipo,this.linea,this.columna,determinado);
+            }
+            if(sim != null){
+                Analizador.AnalizadorLenguaje.tablaSimbolos.add(sim);
+            }
+       }else {
+           // ERROR 
+       }
     }
     
     public String getValorDeterminado(TipoDatoSimbolo tipo){

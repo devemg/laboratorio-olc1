@@ -54,29 +54,16 @@ public class OperacionAritmeticas extends Expresion {
             case BOOLEANO: 
                 return Boolean.parseBoolean(this.valor);
             case CADENA:
-                return this.valor;
+                return this.valor.replace("\"", "");
             case NUMERO: 
                 return Double.parseDouble(this.valor);
             case  ID: 
                 // consultar TS 
-                int i; 
-                String valorFinal = "";
-                boolean existe = false; 
-                for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
-                    if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(this.valor)){
-                            // es un error 
-                            //Analizador.AnalizadorLenguaje.
-                            valorFinal = Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getValor();
-                           existe = true; 
-                           break;
-                      }
-                }
-                
-                if(!existe){
-                    // error 
-                }
-                //retornar el valor
-                return valorFinal;
+               if(Analizador.AnalizadorLenguaje.tablaSimbolos.existeVariable(valor)){
+                return Analizador.AnalizadorLenguaje.tablaSimbolos.getValorVariable(valor);
+               }else{
+                   // ERROR
+               }
         }
         return null;
     }
