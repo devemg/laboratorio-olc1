@@ -6,7 +6,7 @@
 package Analizador;
 
 import AST.Errores.ListaErrores;
-import AST.Sentencia;
+import AST.Sentencias.Sentencia;
 import AST.TablaSimbolos;
 import java.io.BufferedReader;
 import java.io.StringReader;

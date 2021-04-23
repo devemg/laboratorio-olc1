@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AST;
+package AST.Sentencias;
 
 import AST.Expresion;
-import AST.Sentencia;
+import AST.Expresion;
 
 /**
  *

@@ -6,6 +6,9 @@
 
 package Analizador;
 
+import AST.Sentencias.Sentencia;
+import AST.Sentencias.Declaracion;
+import AST.Sentencias.Asignacion;
 import java_cup.runtime.*;
 import AST.*;
 import java.util.ArrayList;
