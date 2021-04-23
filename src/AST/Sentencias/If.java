@@ -18,13 +18,15 @@ public class If extends Sentencia{
     private final ArrayList<Sentencia> listaVerdadero; 
     private final ArrayList<Sentencia> listaFalso; 
 
-    public If(Condicion condicion, ArrayList<Sentencia> listaVerdadero, ArrayList<Sentencia> listaFalso) {
+    public If(Condicion condicion, ArrayList<Sentencia> listaVerdadero, ArrayList<Sentencia> listaFalso, int linea, int columna) {
+        super(linea, columna);
         this.condicion = condicion;
         this.listaVerdadero = listaVerdadero;
         this.listaFalso = listaFalso;
     }
     
-    public If(Condicion condicion, ArrayList<Sentencia> listaVerdadero) {
+    public If(Condicion condicion, ArrayList<Sentencia> listaVerdadero, int linea, int columna) {
+        super(linea, columna);
         this.condicion = condicion;
         this.listaVerdadero = listaVerdadero;
         this.listaFalso = new ArrayList<>();

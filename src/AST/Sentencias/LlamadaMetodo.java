@@ -6,7 +6,6 @@
 package AST.Sentencias;
 
 import AST.Expresion;
-import AST.Sentencias.Sentencia;
 import interfaz.Principal;
 import java.util.ArrayList;
 
@@ -18,7 +17,8 @@ public class LlamadaMetodo extends Sentencia{
     ArrayList<Expresion> parametros;
     String nombre; 
 
-    public LlamadaMetodo(ArrayList<Expresion> parametros, String nombre) {
+    public LlamadaMetodo(ArrayList<Expresion> parametros, String nombre, int linea, int columna) {
+        super(linea, columna);
         this.parametros = parametros;
         this.nombre = nombre;
     }

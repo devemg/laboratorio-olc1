@@ -15,11 +15,12 @@ public abstract class Expresion {
     private int columna = 1;
     
     public abstract Object getValor();
-    
-    public void setLineaColumna(int linea, int columna){
-        this.setLinea(linea); 
-        this.setColumna(columna);
+
+    public Expresion(int linea, int columna) {
+        this.linea = linea; 
+        this.columna = columna; 
     }
+
     
     /**
      * @return the linea

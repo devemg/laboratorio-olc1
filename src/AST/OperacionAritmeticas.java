@@ -16,14 +16,16 @@ public class OperacionAritmeticas extends Expresion {
     TipoOperacion tipo;
     String valor;
 
-    public OperacionAritmeticas(Expresion izq, Expresion der, TipoOperacion tipo) {
+    public OperacionAritmeticas(Expresion izq, Expresion der, TipoOperacion tipo,int linea, int columna) {
+        super(linea, columna);
         this.izq = izq;
         this.der = der;
         this.tipo = tipo;
         this.valor = null;
     }
 
-    public OperacionAritmeticas(TipoOperacion tipo,String valor) {
+    public OperacionAritmeticas(TipoOperacion tipo,String valor, int linea, int columna) {
+        super(linea, columna);
         this.tipo = tipo;
         this.izq = null;
         this.der = null;

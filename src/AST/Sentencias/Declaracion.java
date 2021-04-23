@@ -18,7 +18,8 @@ public class Declaracion extends Sentencia {
     String nombre; 
 
     
-    public Declaracion(TipoDatoSimbolo tipo, String nombre) {
+    public Declaracion(TipoDatoSimbolo tipo, String nombre, int linea, int columna) {
+        super(linea, columna);
         this.tipo = tipo;
         this.nombre = nombre;
     }

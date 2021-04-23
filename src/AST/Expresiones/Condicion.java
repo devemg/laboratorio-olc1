@@ -16,7 +16,8 @@ import AST.Expresion;
 public class Condicion extends Expresion {
 
     
-    public Condicion(Expresion izq, Expresion der, TipoCondicion tipo) {
+    public Condicion(Expresion izq, Expresion der, TipoCondicion tipo, int linea, int columna) {
+        super(linea, columna);
         this.izq = izq;
         this.der = der;
         this.tipo = tipo;

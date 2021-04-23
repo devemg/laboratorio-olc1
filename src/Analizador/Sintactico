@@ -52,10 +52,10 @@ terminal String entero,decimal,cadena,identificador;
 non terminal INICIO;
 non terminal Expresion EXPRESION,VALOR;
 non terminal Condicion CONDICION;
-non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,LLAMADAMF,LISTAPARAMS,IFELSE;
 non terminal TipoDatoSimbolo TIPODATO;
 non terminal  FOR, WHILE, INCREMENTO, FUNCION;
-non terminal ArrayList<Sentencia> BLOQUESENTENCIAS;
+non terminal ArrayList<Sentencia> BLOQUESENTENCIAS,SENTENCIAS;
 //precedencia
 precedence left mayor,menor,igual;
 precedence right not;
@@ -67,13 +67,13 @@ precedence left por,div;
 start with INICIO;
 
 INICIO ::= SENTENCIAS:lista {:
-AnalizadorLenguaje.sentencias = (ArrayList<Sentencia>) lista;
+AnalizadorLenguaje.sentencias =  lista;
 :};
 
 FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
 
 SENTENCIAS ::= SENTENCIAS:sent SENTENCIA:b puntoycoma {:
-ArrayList<Sentencia> lista = (ArrayList<Sentencia>) sent;
+ArrayList<Sentencia> lista =  sent;
 lista.add((Sentencia)b); 
 RESULT = lista;
 :}
@@ -104,11 +104,12 @@ INCREMENTO::= identificador mas mas;
 
 WHILE::= pr_while par1 CONDICION par2 BLOQUESENTENCIAS;
 
-IFELSE::= pr_if par1 CONDICION:a par2 BLOQUESENTENCIAS:b {:new If(a,b).setLineaColumna(aleft, aright); :}
+IFELSE::= pr_if par1 CONDICION:a par2 BLOQUESENTENCIAS:b {:RESULT = new If(a,b,aleft, aright); :}
     |pr_if par1 CONDICION:a par2 BLOQUESENTENCIAS:b pr_else BLOQUESENTENCIAS:c 
-    {:new If(a,b,c).setLineaColumna(aleft, aright); :};
+    {:RESULT = new If(a,b,c, aleft, aright); :};
 
-LLAMADAMF::= identificador:nombre par1 LISTAPARAMS:array par2 {: RESULT = new LlamadaMetodo((ArrayList<Expresion>) array,(String) nombre);:};
+LLAMADAMF::= identificador:nombre par1 LISTAPARAMS:array par2 {: 
+            RESULT = new LlamadaMetodo((ArrayList<Expresion>) array,(String) nombre, nombreleft, nombreright);:};
 
 LISTAPARAMS::= LISTAPARAMS:params coma EXPRESION:b {: 
 ArrayList<Expresion> lista = (ArrayList<Expresion>) params;
@@ -126,35 +127,31 @@ RESULT = lista;
 
 
 ASIGNACION ::= identificador:a igual EXPRESION:b {:
-RESULT = new Asignacion(a,b);
+RESULT = new Asignacion(a,b,aleft,aright);
 :}; 
 
 DECLARACION ::= TIPODATO:tipo identificador:nombre 
-{: 
-Declaracion dec = new Declaracion(tipo, nombre);
-dec.setLineaColumna(tipoleft, tipoleft);
-RESULT = dec;
- :};
+{:  RESULT = new Declaracion(tipo, nombre, tipoleft, tipoleft); :};
 
 TIPODATO ::= pr_number {: RESULT = TipoDatoSimbolo.NUMERO; :}
     | pr_string {: RESULT = TipoDatoSimbolo.CADENA; :}
     | pr_boolean {: RESULT = TipoDatoSimbolo.BOOLEANO; :};
 
-EXPRESION::=EXPRESION:a mas:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.SUMA); :}
-    |EXPRESION:a menos:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.RESTA); :}
-    |EXPRESION:a div:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.DIVISION); :}
-    |EXPRESION:a por:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.MULTIPLICACION); :}
+EXPRESION::=EXPRESION:a mas:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.SUMA,aleft,aright); :}
+    |EXPRESION:a menos:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.RESTA,aleft,aright); :}
+    |EXPRESION:a div:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.DIVISION,aleft,aright); :}
+    |EXPRESION:a por:c EXPRESION:b {: RESULT = new OperacionAritmeticas(a,b,TipoOperacion.MULTIPLICACION,aleft,aright); :}
     |VALOR:a {: RESULT = a; :} 
     |CONDICION :a {: RESULT = a; :} ;
 
-CONDICION::= EXPRESION:a mayor:c EXPRESION:b {: new Condicion(a,b,TipoCondicion.MAYOR).setLineaColumna(cleft,cright);:}
-    |EXPRESION:a menor:c EXPRESION:b {: new Condicion(a,b,TipoCondicion.MENOR).setLineaColumna(cleft,cright);:}
-    |EXPRESION:a igual:c igual EXPRESION:b {: new Condicion(a,b,TipoCondicion.IGUAL).setLineaColumna(cleft,cright);:}
-    |EXPRESION:a not:c igual EXPRESION:b {: new Condicion(a,b,TipoCondicion.DIFERENTE).setLineaColumna(cleft,cright);:}
+CONDICION::= EXPRESION:a mayor:c EXPRESION:b {: RESULT =  new Condicion(a,b,TipoCondicion.MAYOR,cleft,cright);:}
+    |EXPRESION:a menor:c EXPRESION:b {:RESULT =  new Condicion(a,b,TipoCondicion.MENOR,cleft,cright);:}
+    |EXPRESION:a igual:c igual EXPRESION:b {:RESULT =  new Condicion(a,b,TipoCondicion.IGUAL,cleft,cright);:}
+    |EXPRESION:a not:c igual EXPRESION:b {:RESULT =  new Condicion(a,b,TipoCondicion.DIFERENTE,cleft,cright);:}
     ;
 
 
-VALOR ::= cadena:a {: RESULT = new OperacionAritmeticas(TipoOperacion.CADENA,(String)a); :}
-    |entero:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a); :}
-    |decimal:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a); :}
-    |identificador:a {: RESULT = new OperacionAritmeticas(TipoOperacion.ID,(String)a); :};
+VALOR ::= cadena:a {: RESULT = new OperacionAritmeticas(TipoOperacion.CADENA,(String)a,aleft,aright); :}
+    |entero:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a,aleft,aright); :}
+    |decimal:a {: RESULT = new OperacionAritmeticas(TipoOperacion.NUMERO,(String)a,aleft,aright); :}
+    |identificador:a {: RESULT = new OperacionAritmeticas(TipoOperacion.ID,(String)a,aleft,aright); :};

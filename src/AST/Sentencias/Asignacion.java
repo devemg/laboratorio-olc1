@@ -17,7 +17,8 @@ public class Asignacion extends Sentencia {
     String nombre; 
     Expresion expresion;
 
-    public Asignacion(String nombre, Expresion expresion) {
+    public Asignacion(String nombre, Expresion expresion, int linea, int columna) {
+        super(linea, columna);
         this.nombre = nombre;
         this.expresion = expresion;
     }

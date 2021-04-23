@@ -17,9 +17,9 @@ public abstract class Sentencia {
     
     public abstract void Ejecutar();
     
-    public void setLineaColumna(int linea, int columna){
-        this.setLinea(linea); 
-        this.setColumna(columna);
+    public Sentencia (int linea, int columna){
+        this.linea = linea; 
+        this.columna = columna;
     }
     
     /**
