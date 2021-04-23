@@ -17,14 +17,10 @@ public class Declaracion extends Sentencia {
     TipoDatoSimbolo tipo; 
     String nombre; 
 
-    int linea = 0;
-    int columna = 0; 
     
-    public Declaracion(TipoDatoSimbolo tipo, String nombre, int linea, int columna) {
+    public Declaracion(TipoDatoSimbolo tipo, String nombre) {
         this.tipo = tipo;
         this.nombre = nombre;
-        this.linea = linea; 
-        this.columna = columna;
     }
     
     
@@ -36,7 +32,7 @@ public class Declaracion extends Sentencia {
            Simbolo sim = null;
             String determinado = this.getValorDeterminado(this.tipo);
             if(determinado != null){
-               sim = new Simbolo(this.nombre,this.tipo,this.linea,this.columna,determinado);
+               sim = new Simbolo(this.nombre,this.tipo,this.getLinea(),this.getColumna(),determinado);
             }
             if(sim != null){
                 Analizador.AnalizadorLenguaje.tablaSimbolos.add(sim);

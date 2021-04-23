@@ -29,12 +29,16 @@ public class AnalizadorLenguaje {
             //analizando
             sin.parse();
             
-            int i; 
+            if(AnalizadorLenguaje.sentencias != null){
+                int i; 
             for(i = 0; i< AnalizadorLenguaje.sentencias.size(); i++){
                 AnalizadorLenguaje.sentencias.get(i).Ejecutar();
             }
             
             System.out.println("Sin errores");
+            }else {
+                throw  new Exception("No hay sentencias reconocidas");
+            }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
         }
