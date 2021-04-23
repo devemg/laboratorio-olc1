@@ -27,4 +27,5 @@ public class ListaErrores extends ArrayList<MiError> {
             Principal.escribirErrorEnConsola(t.toString());
         });
     }
+    
 }

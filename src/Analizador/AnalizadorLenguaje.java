@@ -5,6 +5,7 @@
  */
 package Analizador;
 
+import AST.Errores.ListaErrores;
 import AST.Sentencia;
 import AST.TablaSimbolos;
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ public class AnalizadorLenguaje {
     private static AnalizadorLenguaje analizador;
     public static TablaSimbolos tablaSimbolos; 
     public static ArrayList<Sentencia> sentencias;
+    public static ListaErrores errores; 
     
  public static boolean AnalizarCodigo(String entrada, String ubicacion) {
         try {
@@ -37,8 +39,9 @@ public class AnalizadorLenguaje {
             System.err.println("Error: " + ex.getMessage());
         }
         
-        
-        
+        if(AnalizadorLenguaje.errores.size() > 0){
+            return false;
+        }
        return true;
     }
 
@@ -47,6 +50,7 @@ public class AnalizadorLenguaje {
         if (analizador == null) {
             analizador = new AnalizadorLenguaje();
             tablaSimbolos = new TablaSimbolos();
+            errores = new ListaErrores();
         }
         return analizador;
     }
@@ -54,7 +58,7 @@ public class AnalizadorLenguaje {
     public static void LimpiarInstancia() {
         if (analizador != null) {
             tablaSimbolos.clear();
-            //AnalizadorLenguaje.setErrores(new ArrayList<>());
+            errores.clear();
            } else {
             System.out.println("No existe un analizador");
         }

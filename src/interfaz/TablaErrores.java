@@ -5,6 +5,7 @@
  */
 package interfaz;
 
+import AST.Errores.MiError;
 import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +25,7 @@ public class TablaErrores extends javax.swing.JFrame {
      * @param errores
      */
     //TODO cambiar tipo de dato de lista
-    public TablaErrores(ArrayList<Object> errores) {
+    public TablaErrores(ArrayList<MiError> errores) {
         initComponents();
         this.setSize(new Dimension(1032, 356));
         Date date = new Date();
@@ -33,18 +34,18 @@ public class TablaErrores extends javax.swing.JFrame {
         lb_fecha.setText("Fecha: " + dateFormat.format(date));
         lb_hora.setText(" Hora:" + hourFormat.format(date));
         if (errores != null) {
-          /*  DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn("Tipo de Error");
             modelo.addColumn("Mensaje");
-            modelo.addColumn("Ubicación");
+            //modelo.addColumn("Ubicación");
             modelo.addColumn("Linea");
             modelo.addColumn("Columna");
             errores.stream().forEach((e) -> {
                 if (!e.getMensaje().equals("identificador \"null\" no identificado")) {
-                    modelo.addRow(new Object[]{e.getTipo(), e.getMensaje(), e.getUbicacion(), e.getLinea(), e.getColumna()});
+                    modelo.addRow(new Object[]{e.getTipo(), e.getMensaje(), e.getLinea(), e.getColumna()});
                 }
             });
-            jTable1.setModel(modelo);*/
+            jTable1.setModel(modelo);
         }
     }
 

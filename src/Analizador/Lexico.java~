@@ -6,6 +6,7 @@
  */
 
 package Analizador;
+import AST.Errores.*;
 import java_cup.runtime.Symbol;
 
 /**
@@ -690,7 +691,8 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 1: 
             { System.out.println("Este es un error lexico: "+yytext()+
     ", en la linea: "+yyline+", en la columna: "+yychar);
-    //AnalizadorLenguaje.errores.add(new MyError(yyline, yycolumn, yytext(), "Se detectó un error léxico"));
+AnalizadorLenguaje.errores.add(new MiError(yyline, yycolumn, TipoError.LEXICO, 
+            "Se detectó un error léxico (caracter "+yytext()+")"));
             }
           case 30: break;
           case 2: 

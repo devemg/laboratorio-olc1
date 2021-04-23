@@ -5,6 +5,7 @@
  */
 package interfaz;
 
+import AST.Errores.ListaErrores;
 import Analizador.AnalizadorLenguaje;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -82,7 +83,6 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/open-folder.png"))); // NOI18N
-        jButton1.setText("");
         jButton1.setToolTipText("Abrir");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -95,7 +95,6 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/save.png"))); // NOI18N
-        jButton2.setText("");
         jButton2.setToolTipText("Guardar");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -124,6 +123,11 @@ public class Principal extends javax.swing.JFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
@@ -273,6 +277,11 @@ public class Principal extends javax.swing.JFrame {
         EjecutarCodigo();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new TablaErrores(AnalizadorLenguaje.errores).setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -356,9 +365,9 @@ public class Principal extends javax.swing.JFrame {
         } else {
            // System.out.println("Código con errores sintácticos-léxicos");
             escribirErrorEnConsola("Finalizado con errores");
-           /* AnalizadorLenguaje.getErrores().stream().forEach((er) -> {
+            AnalizadorLenguaje.errores.stream().forEach((er) -> {
                 escribirErrorEnConsola(er.toString());
-            });*/
+            });
         }
     }
 

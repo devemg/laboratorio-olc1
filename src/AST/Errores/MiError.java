@@ -12,8 +12,8 @@ package AST.Errores;
 public class MiError {
 
     public MiError(int linea, int columna, TipoError tipo, String mensaje) {
-        this.linea = linea;
-        this.columna = columna;
+        this.linea = linea+1;
+        this.columna = columna+1;
         this.tipo = tipo;
         this.mensaje = mensaje;
     }
