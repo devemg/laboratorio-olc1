@@ -26,7 +26,7 @@ parser code
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
         AnalizadorLenguaje.errores.add(new MiError(s.left, s.right, TipoError.SINTACTICO, 
-                "Se detectó un error semántico ("+s.value+")"));
+                "Se detectó un error sintáctico ("+s.value+")"));
         
     } 
 
@@ -39,7 +39,7 @@ parser code
         (s.left)+ " Columna "+s.right+". Componente " + s.value + 
         " no reconocido."); 
         AnalizadorLenguaje.errores.add(new MiError(s.left, s.right, TipoError.SINTACTICO, 
-                        "Se detectó un error semántico ("+s.value+")"));
+                        "Se detectó un error sintáctico ("+s.value+")"));
     }  
 :} 
 terminal mas,menos,div,por;
@@ -52,25 +52,41 @@ terminal String entero,decimal,cadena,identificador;
 non terminal INICIO;
 non terminal Expresion EXPRESION,VALOR;
 non terminal Condicion CONDICION;
-non terminal SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal SENTENCIA,DECLARACION,ASIGNACION,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal SENTENCIACC;
 non terminal TipoDatoSimbolo TIPODATO;
-non terminal  FOR, WHILE, INCREMENTO, FUNCION;
+non terminal  FOR, WHILE, INCREMENTO;
+non terminal Metodo FUNCION;
+non terminal ArrayList<Metodo> LISTAFUNC;
+
 non terminal ArrayList<Sentencia> BLOQUESENTENCIAS,SENTENCIAS;
+
 //precedencia
 precedence left mayor,menor,igual;
 precedence right not;
-
 precedence left mas,menos;
 precedence left por,div;
 
 
 start with INICIO;
 
-INICIO ::= SENTENCIAS:lista {:
-AnalizadorLenguaje.sentencias =  lista;
+INICIO ::= LISTAFUNC:lista {:
+    AnalizadorLenguaje.listaMetodos = lista;
 :};
 
-FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
+LISTAFUNC::= LISTAFUNC:l FUNCION:a {:
+ArrayList<Metodo> lista =  l;
+lista.add((Metodo)a); 
+RESULT = lista;
+:}
+| FUNCION:a {: 
+ArrayList<Metodo> lista = new ArrayList<>();
+lista.add((Metodo)a); 
+RESULT = lista;
+:};
+
+
+FUNCION::= pr_func identificador:a par1 par2 BLOQUESENTENCIAS:b {: RESULT = new Metodo(a,b);:};
 
 SENTENCIAS ::= SENTENCIAS:sent SENTENCIA:b puntoycoma {:
 ArrayList<Sentencia> lista =  sent;
@@ -82,21 +98,27 @@ ArrayList<Sentencia> lista = new ArrayList();
 lista.add((Sentencia)a); 
 RESULT = lista;
 :}
+| SENTENCIAS:sent SENTENCIACC:b {:
+ArrayList<Sentencia> lista =  sent;
+lista.add((Sentencia)b); 
+RESULT = lista;
+:}
+| SENTENCIACC:a {: 
+ArrayList<Sentencia> lista = new ArrayList();
+lista.add((Sentencia)a); 
+RESULT = lista;
+:}
 ;
 
 SENTENCIA ::= DECLARACION :a {: RESULT = a; :}
     | ASIGNACION:a {: RESULT = a; :}
     | LLAMADAMF:a {: RESULT = a; :}
-    | IFELSE:a {: RESULT = a; :}
 ;
 
-//SENTENCIACONTROL ::= 
-//    | FOR
-//    | WHILE
-//;
+SENTENCIACC::=  IFELSE:a {: RESULT = a; :};
 
-BLOQUESENTENCIAS::= llave1 SENTENCIAS llave2
-    |llave1  llave2;
+BLOQUESENTENCIAS::= llave1 SENTENCIAS:a llave2 {: RESULT = a; :}
+    |llave1  llave2{: RESULT = new ArrayList<>(); :};
 
 FOR::=pr_for par1 ASIGNACION puntoycoma CONDICION puntoycoma INCREMENTO par2 BLOQUESENTENCIAS; 
 

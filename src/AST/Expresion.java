@@ -14,7 +14,7 @@ public abstract class Expresion {
     private int linea = 1; 
     private int columna = 1;
     
-    public abstract Object getValor();
+    public abstract Object getValor(TablaSimbolos tablaSimbolos);
 
     public Expresion(int linea, int columna) {
         this.linea = linea; 

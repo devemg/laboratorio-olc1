@@ -5,7 +5,11 @@
  */
 package AST.Sentencias;
 
+import AST.Errores.MiError;
+import AST.Errores.TipoError;
 import AST.Expresion;
+import AST.Metodo;
+import AST.TablaSimbolos;
 import interfaz.Principal;
 import java.util.ArrayList;
 
@@ -24,12 +28,34 @@ public class LlamadaMetodo extends Sentencia{
     }
 
     @Override
-    public void Ejecutar() {
+    public void Ejecutar(TablaSimbolos tabla) {
         if("print".equals(nombre.toLowerCase())){
             int i; 
             for(i = 0; i < this.parametros.size(); i++){
-                Principal.escribirMensajeEnConsola(this.parametros.get(i).getValor().toString());
+                Principal.escribirMensajeEnConsola(this.parametros.get(i).getValor(tabla).toString());
             }
+        }else {
+             Metodo metodo = null;
+             for(Metodo m : Analizador.AnalizadorLenguaje.listaMetodos){
+                 if(m.getNombre().equals(this.nombre)){
+                     metodo = m; 
+                     break;
+                 }
+             }
+             
+             if(metodo != null){
+                 
+                 TablaSimbolos tablaMetodo = new TablaSimbolos(tabla);
+                 metodo.getSentencias().forEach((t) -> {
+                     t.Ejecutar(tablaMetodo);
+                 });
+                 
+                 
+             }else {
+                 Analizador.AnalizadorLenguaje.errores.add(
+                 new MiError(this.getLinea(), this.getColumna(), 
+                         TipoError.SEMANTICO, "No existe el método o función"));
+             }
         }
     }
     

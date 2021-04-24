@@ -6,6 +6,7 @@
 package AST.Sentencias;
 
 import AST.Expresiones.Condicion;
+import AST.TablaSimbolos;
 import java.util.ArrayList;
 
 /**
@@ -34,15 +35,15 @@ public class If extends Sentencia{
     
     
     @Override
-    public void Ejecutar() {
-        boolean value = Boolean.parseBoolean(this.condicion.getValor().toString());
+    public void Ejecutar(TablaSimbolos tabla) {
+        boolean value = Boolean.parseBoolean(this.condicion.getValor(tabla).toString());
         if(value){
             this.listaVerdadero.forEach(sentencia -> {
-                sentencia.Ejecutar();
+                sentencia.Ejecutar(new TablaSimbolos(tabla));
             });
         }else {
             this.listaFalso.forEach(sentencia -> {
-                sentencia.Ejecutar();
+                sentencia.Ejecutar(new TablaSimbolos(tabla));
             });
         }
     }

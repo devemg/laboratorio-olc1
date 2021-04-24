@@ -6,7 +6,7 @@
 package AST.Sentencias;
 
 import AST.Expresion;
-import AST.Expresion;
+import AST.TablaSimbolos;
 
 /**
  *
@@ -25,12 +25,12 @@ public class Asignacion extends Sentencia {
    
     
     @Override
-    public void Ejecutar() {
+    public void Ejecutar(TablaSimbolos tabla) {
         System.out.println("ejecutando sentencia...");
         System.out.println(this.nombre);
         // ver si la variable existe 
-        if(Analizador.AnalizadorLenguaje.tablaSimbolos.existeVariable(nombre)){
-            Analizador.AnalizadorLenguaje.tablaSimbolos.asignarValor(nombre,this.expresion.getValor().toString());
+        if(tabla.existeVariable(nombre)){
+            tabla.asignarValor(nombre,this.expresion.getValor(tabla).toString());
         }else {
             // ERROR
         }

@@ -5,6 +5,7 @@
  */
 package AST.Sentencias;
 
+import AST.TablaSimbolos;
 import Analizador.Simbolo;
 import Analizador.TipoDatoSimbolo;
 
@@ -26,17 +27,17 @@ public class Declaracion extends Sentencia {
     
     
     @Override
-    public void Ejecutar() {
+    public void Ejecutar(TablaSimbolos tabla) {
         
 
-       if(!Analizador.AnalizadorLenguaje.tablaSimbolos.existeVariable(nombre)){
+       if(!tabla.existeVariable(nombre)){
            Simbolo sim = null;
             String determinado = this.getValorDeterminado(this.tipo);
             if(determinado != null){
                sim = new Simbolo(this.nombre,this.tipo,this.getLinea(),this.getColumna(),determinado);
             }
             if(sim != null){
-                Analizador.AnalizadorLenguaje.tablaSimbolos.add(sim);
+                tabla.add(sim);
             }
        }else {
            // ERROR 

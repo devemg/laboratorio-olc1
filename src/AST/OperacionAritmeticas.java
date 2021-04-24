@@ -5,6 +5,9 @@
  */
 package AST;
 
+import AST.Errores.MiError;
+import AST.Errores.TipoError;
+
 /**
  *
  * @author gm_ye
@@ -35,23 +38,23 @@ public class OperacionAritmeticas extends Expresion {
     
 
     @Override
-    public Object getValor() {
+    public Object getValor(TablaSimbolos tablaSimbolos) {
         switch (tipo) {
             case DIVISION:
-                double resIzq = Double.parseDouble(izq.getValor().toString());
-                double resDer = Double.parseDouble(der.getValor().toString());
+                double resIzq = Double.parseDouble(izq.getValor(tablaSimbolos).toString());
+                double resDer = Double.parseDouble(der.getValor(tablaSimbolos).toString());
                 return resIzq / resDer;
             case MULTIPLICACION:
-                resIzq = Double.parseDouble(izq.getValor().toString());
-                resDer = Double.parseDouble(der.getValor().toString());
+                resIzq = Double.parseDouble(izq.getValor(tablaSimbolos).toString());
+                resDer = Double.parseDouble(der.getValor(tablaSimbolos).toString());
                 return resIzq * resDer;
             case RESTA:
-                resIzq = Double.parseDouble(izq.getValor().toString());
-                resDer = Double.parseDouble(der.getValor().toString());
+                resIzq = Double.parseDouble(izq.getValor(tablaSimbolos).toString());
+                resDer = Double.parseDouble(der.getValor(tablaSimbolos).toString());
                 return resIzq - resDer;
             case SUMA:
-                resIzq = Double.parseDouble(izq.getValor().toString());
-                resDer = Double.parseDouble(der.getValor().toString());
+                resIzq = Double.parseDouble(izq.getValor(tablaSimbolos).toString());
+                resDer = Double.parseDouble(der.getValor(tablaSimbolos).toString());
                 return resIzq + resDer;
             case BOOLEANO: 
                 return Boolean.parseBoolean(this.valor);
@@ -59,12 +62,14 @@ public class OperacionAritmeticas extends Expresion {
                 return this.valor.replace("\"", "");
             case NUMERO: 
                 return Double.parseDouble(this.valor);
-            case  ID: 
+            case ID: 
                 // consultar TS 
-               if(Analizador.AnalizadorLenguaje.tablaSimbolos.existeVariable(valor)){
-                return Analizador.AnalizadorLenguaje.tablaSimbolos.getValorVariable(valor);
+               if(tablaSimbolos.existeVariable(valor)){
+                return tablaSimbolos.getValorVariable(valor);
                }else{
                    // ERROR
+                   Analizador.AnalizadorLenguaje.errores.add(new MiError(this.getLinea(), this.getColumna(), 
+                           TipoError.SEMANTICO, "No existe la variable "+this.valor));
                }
         }
         return null;

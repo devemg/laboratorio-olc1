@@ -8,6 +8,7 @@ package AST.Expresiones;
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
 import AST.Expresion;
+import AST.TablaSimbolos;
 
 /**
  *
@@ -25,9 +26,9 @@ public class Condicion extends Expresion {
         
     
     @Override
-    public Object getValor() {
-        double vizq = Double.parseDouble(this.izq.getValor().toString());
-        double vder = Double.parseDouble(this.der.getValor().toString());
+    public Object getValor(TablaSimbolos tabla) {
+        double vizq = Double.parseDouble(this.izq.getValor(tabla).toString());
+        double vder = Double.parseDouble(this.der.getValor(tabla).toString());
         switch(this.tipo){
             case DIFERENTE: 
                 return vizq != vder;

@@ -14,17 +14,29 @@ import java.util.ArrayList;
  */
 public class TablaSimbolos extends ArrayList<Simbolo>{
 
-    public TablaSimbolos() {
+    TablaSimbolos padre; 
+    
+    public TablaSimbolos(TablaSimbolos padre) {
         super();
+        this.padre = padre;
     }
     
     
     public boolean existeVariable(String nombre){
         int i; 
-        for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
-            if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(nombre)){
-                    return true;
+        boolean existe = false; 
+        for(i = 0; i< this.size(); i++) {
+            if(this.get(i).getNombre().equals(nombre)){
+                    existe = true;
+                    break;
               }
+        }
+        if(existe){
+            return existe;
+        }else {
+            if(this.padre != null){
+                return this.padre.existeVariable(nombre);
+            }
         }
         return false;
     }
@@ -35,20 +47,44 @@ public class TablaSimbolos extends ArrayList<Simbolo>{
     
     public String getValorVariable(String nombre){
         int i; 
-        for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
-            if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(nombre)){
-                    return Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getValor();
+        int j = 0; //indice de la variable
+        boolean existe = false; 
+        for(i = 0; i< this.size(); i++) {
+            if(this.get(i).getNombre().equals(nombre)){
+                   existe = true; 
+                   j = i;
+                   break;
               }
+        }
+        
+        if(existe){
+            return this.get(j).getValor();
+        }else {
+            if(this.padre != null){
+                return this.padre.getValorVariable(nombre);
+            }
         }
         return null;
     }
     
     public void asignarValor(String nombre,String valor){
         int i; 
-        for(i = 0; i< Analizador.AnalizadorLenguaje.tablaSimbolos.size(); i++) {
-            if(Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).getNombre().equals(nombre)){
-                    Analizador.AnalizadorLenguaje.tablaSimbolos.get(i).setValor(valor);
+        int j = 0; //indice de la variable
+        boolean existe = false; 
+        for(i = 0; i< this.size(); i++) {
+            if(this.get(i).getNombre().equals(nombre)){
+                     existe = true; 
+                   j = i;
+                   break;
               }
+        }
+        
+        if(existe){
+            this.get(j).setValor(valor);
+        }else {
+            if(this.padre != null){
+                this.padre.asignarValor(nombre, valor);
+            }
         }
     }
     

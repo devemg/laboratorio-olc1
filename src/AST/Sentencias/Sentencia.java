@@ -5,6 +5,8 @@
  */
 package AST.Sentencias;
 
+import AST.TablaSimbolos;
+
 /**
  *
  * @author gm_ye
@@ -15,7 +17,7 @@ public abstract class Sentencia {
     private int columna = 1; 
     
     
-    public abstract void Ejecutar();
+    public abstract void Ejecutar(TablaSimbolos tablaSimbolos);
     
     public Sentencia (int linea, int columna){
         this.linea = linea; 

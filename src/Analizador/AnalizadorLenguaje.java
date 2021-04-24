@@ -6,6 +6,7 @@
 package Analizador;
 
 import AST.Errores.ListaErrores;
+import AST.Metodo;
 import AST.Sentencias.Sentencia;
 import AST.TablaSimbolos;
 import java.io.BufferedReader;
@@ -18,9 +19,10 @@ import java.util.ArrayList;
  */
 public class AnalizadorLenguaje {
     private static AnalizadorLenguaje analizador;
-    public static TablaSimbolos tablaSimbolos; 
     public static ArrayList<Sentencia> sentencias;
     public static ListaErrores errores; 
+    public static ArrayList<Metodo> listaMetodos; 
+    
     
  public static boolean AnalizarCodigo(String entrada, String ubicacion) {
         try {
@@ -29,12 +31,21 @@ public class AnalizadorLenguaje {
             //analizando
             sin.parse();
             
-            if(AnalizadorLenguaje.sentencias != null){
-                int i; 
-            for(i = 0; i< AnalizadorLenguaje.sentencias.size(); i++){
-                AnalizadorLenguaje.sentencias.get(i).Ejecutar();
-            }
+            if(AnalizadorLenguaje.listaMetodos != null){
             
+                for(Metodo t : listaMetodos) {
+                    if("main".equals(t.getNombre())){
+                            int i; 
+                            TablaSimbolos global = new TablaSimbolos(null);
+                            for(i = 0; i< t.getSentencias().size(); i++){
+                               t.getSentencias().get(i).Ejecutar(global);
+                            }
+                            break;
+                    }
+                }
+          
+            
+                    
             System.out.println("Sin errores");
             }else {
                 throw  new Exception("No hay sentencias reconocidas");
@@ -53,16 +64,16 @@ public class AnalizadorLenguaje {
     public static AnalizadorLenguaje getInstancia() {
         if (analizador == null) {
             analizador = new AnalizadorLenguaje();
-            tablaSimbolos = new TablaSimbolos();
             errores = new ListaErrores();
+            listaMetodos = new ArrayList<>();
         }
         return analizador;
     }
 
     public static void LimpiarInstancia() {
         if (analizador != null) {
-            tablaSimbolos.clear();
             errores.clear();
+            listaMetodos.clear();
            } else {
             System.out.println("No existe un analizador");
         }
