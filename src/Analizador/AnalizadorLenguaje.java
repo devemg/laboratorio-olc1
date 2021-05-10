@@ -30,7 +30,6 @@ public class AnalizadorLenguaje {
                     new Lexico(new BufferedReader(new StringReader(entrada))));
             //analizando
             sin.parse();
-            StringBuilder graph = new StringBuilder();
             if (AnalizadorLenguaje.listaMetodos != null) {
 
                 for (Metodo t : listaMetodos) {
@@ -38,13 +37,11 @@ public class AnalizadorLenguaje {
                         int i;
                         TablaSimbolos global = new TablaSimbolos(null);
                         for (i = 0; i < t.getSentencias().size(); i++) {
-                            t.getSentencias().get(i).getCodigoGraph(graph);
                             t.getSentencias().get(i).Ejecutar(global);
                         }
                         break;
                     }
                 }
-                System.out.println(graph.toString().replace(".", "").replace("@", ""));
                 System.out.println("Sin errores");
             } else {
                 throw new Exception("No hay sentencias reconocidas");

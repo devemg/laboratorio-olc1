@@ -5,7 +5,7 @@
  */
 package AST.Sentencias;
 
-import AST.Expresion;
+import AST.Expresiones.Expresion;
 import AST.TablaSimbolos;
 
 /**

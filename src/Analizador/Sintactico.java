@@ -6,6 +6,9 @@
 
 package Analizador;
 
+import AST.Expresiones.OperacionAritmeticas;
+import AST.Expresiones.TipoOperacion;
+import AST.Expresiones.Expresion;
 import AST.Sentencias.LlamadaMetodo;
 import AST.Sentencias.Sentencia;
 import AST.Sentencias.Declaracion;

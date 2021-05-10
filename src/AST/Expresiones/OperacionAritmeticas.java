@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AST;
+package AST.Expresiones;
 
+import AST.Expresiones.TipoOperacion;
+import AST.Expresiones.Expresion;
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
+import AST.TablaSimbolos;
 
 /**
  *

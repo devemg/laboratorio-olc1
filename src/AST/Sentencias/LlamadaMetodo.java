@@ -7,7 +7,7 @@ package AST.Sentencias;
 
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
-import AST.Expresion;
+import AST.Expresiones.Expresion;
 import AST.Metodo;
 import AST.TablaSimbolos;
 import interfaz.Principal;
