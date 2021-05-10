@@ -75,4 +75,42 @@ public class OperacionAritmeticas extends Expresion {
         return null;
     }
 
+    @Override
+    public void getCodigoGraph(StringBuilder builder) {
+        switch (this.tipo) {
+            case NUMERO:
+            case BOOLEANO:
+            case CADENA:
+                builder.append(this.hashCode()).append("[label=\"").append(valor.replace("\"", "")).append("\"];").append("\n");
+                break;
+            case ID:
+                builder.append(this.hashCode()).append("[label=\"ID\"];").append("\n");
+                builder.append(this.hashCode()).append(valor.hashCode())
+                        .append("[label=\"").append(valor.replace("\"", ""))
+                        .append("\"];").append("\n");
+                builder.append(this.hashCode())
+                        .append("->").
+                        append(this.hashCode()).append(valor.hashCode())
+                        .append(";").append("\n");
+                break;
+            default:
+                builder.append(this.hashCode()).append("[label=\"OperacionAritmetica\"];").append("\n");
+            this.izq.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append(this.tipo.hashCode())
+                    .append("[label=\"")
+                    .append(this.tipo.toString())
+                    .append("\"];")
+                    .append("\n");
+            this.der.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append("->").append(this.izq.hashCode()).append(";").append("\n");
+            builder.append(this.hashCode()).append("->").append(this.hashCode()).append(this.tipo.hashCode())
+                    .append(";").append("\n");
+            builder.append(this.hashCode())
+                    .append("->")
+                    .append(this.der.hashCode())
+                    .append(";").append("\n");
+                break;
+        } 
+    }
+
 }

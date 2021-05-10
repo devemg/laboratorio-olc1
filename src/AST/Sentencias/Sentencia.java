@@ -18,6 +18,7 @@ public abstract class Sentencia {
     
     
     public abstract void Ejecutar(TablaSimbolos tablaSimbolos);
+    public abstract void getCodigoGraph(StringBuilder builder);
     
     public Sentencia (int linea, int columna){
         this.linea = linea; 

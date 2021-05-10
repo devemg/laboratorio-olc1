@@ -60,5 +60,10 @@ public class Declaracion extends Sentencia {
     }
     
     
-    
+    @Override
+    public void getCodigoGraph(StringBuilder builder) {
+        builder.append(this.hashCode()).append("[label=\"Declaracion\"];");
+        builder.append(this.nombre.hashCode()).append("[label=\"").append(nombre.hashCode()).append("\"];\n");
+        builder.append(this.hashCode()).append("->").append(this.nombre.hashCode()).append(";");
+    }
 }

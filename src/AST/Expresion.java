@@ -15,6 +15,7 @@ public abstract class Expresion {
     private int columna = 1;
     
     public abstract Object getValor(TablaSimbolos tablaSimbolos);
+    public abstract void getCodigoGraph(StringBuilder builder);
 
     public Expresion(int linea, int columna) {
         this.linea = linea; 
