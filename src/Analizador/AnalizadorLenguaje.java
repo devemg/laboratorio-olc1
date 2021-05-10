@@ -8,7 +8,7 @@ package Analizador;
 import AST.Errores.ListaErrores;
 import AST.Metodo;
 import AST.Sentencias.Sentencia;
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;

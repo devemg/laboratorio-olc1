@@ -9,7 +9,7 @@ import AST.Expresiones.TipoOperacion;
 import AST.Expresiones.Expresion;
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 
 /**
  *

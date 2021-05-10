@@ -5,9 +5,9 @@
  */
 package AST.Sentencias;
 
-import AST.TablaSimbolos;
-import Analizador.Simbolo;
-import Analizador.TipoDatoSimbolo;
+import AST.Simbolos.TablaSimbolos;
+import AST.Simbolos.Simbolo;
+import AST.Simbolos.TipoDatoSimbolo;
 
 /**
  *

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AST;
+package AST.Simbolos;
 
-import Analizador.Simbolo;
 import java.util.ArrayList;
 
 /**

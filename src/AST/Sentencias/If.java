@@ -6,7 +6,7 @@
 package AST.Sentencias;
 
 import AST.Expresiones.Condicion;
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 import java.util.ArrayList;
 
 /**

@@ -6,6 +6,7 @@
 
 package Analizador;
 
+import AST.Simbolos.TipoDatoSimbolo;
 import AST.Expresiones.OperacionAritmeticas;
 import AST.Expresiones.TipoOperacion;
 import AST.Expresiones.Expresion;

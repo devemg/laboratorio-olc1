@@ -5,14 +5,11 @@
  */
 package interfaz;
 
-import AST.Errores.ListaErrores;
 import AST.Errores.MiError;
 import Analizador.AnalizadorLenguaje;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,6 +89,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/open-folder.png"))); // NOI18N
+        jButton1.setText("Abrir");
         jButton1.setToolTipText("Abrir");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -104,6 +102,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/save.png"))); // NOI18N
+        jButton2.setText("Guardar");
         jButton2.setToolTipText("Guardar");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -116,6 +115,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jButton2);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/system.png"))); // NOI18N
+        jButton4.setText("Ejecutar");
         jButton4.setToolTipText("Ejecutar");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -128,6 +128,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/browser.png"))); // NOI18N
+        jButton3.setText("Errores");
         jButton3.setToolTipText("Errores");
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -139,7 +140,9 @@ public class Principal extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton3);
 
-        jButton5.setText("Generar grafica");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaz/Icons/flow (1).png"))); // NOI18N
+        jButton5.setText("AST");
+        jButton5.setToolTipText("AST");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -417,6 +420,7 @@ public class Principal extends javax.swing.JFrame {
             try ( //escribirMensajeEnConsola(response);
                     FileWriter fr = new FileWriter("ast.txt")) {
                     fr.write(response);
+                    escribirMensajeEnConsola(response);
                     fr.close();
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);

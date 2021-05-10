@@ -5,7 +5,7 @@
  */
 package AST.Expresiones;
 
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 
 /**
  *

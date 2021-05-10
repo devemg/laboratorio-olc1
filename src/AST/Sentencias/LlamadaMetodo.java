@@ -9,7 +9,7 @@ import AST.Errores.MiError;
 import AST.Errores.TipoError;
 import AST.Expresiones.Expresion;
 import AST.Metodo;
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 import interfaz.Principal;
 import java.util.ArrayList;
 

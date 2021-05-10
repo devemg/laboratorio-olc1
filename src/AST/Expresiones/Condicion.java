@@ -7,7 +7,7 @@ package AST.Expresiones;
 
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
-import AST.TablaSimbolos;
+import AST.Simbolos.TablaSimbolos;
 
 /**
  *
