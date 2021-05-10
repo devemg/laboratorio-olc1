@@ -6,10 +6,18 @@
 package interfaz;
 
 import AST.Errores.ListaErrores;
+import AST.Errores.MiError;
 import Analizador.AnalizadorLenguaje;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -56,6 +64,7 @@ public class Principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         pestañas = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -129,6 +138,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton3);
+
+        jButton5.setText("Generar grafica");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton5);
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
@@ -248,10 +268,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_ResizeJS1
     //**VER ERRORES
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        /*if (AnalizadorLenguaje.getErrores() != null) {
+        if (AnalizadorLenguaje.errores != null) {
             //errores en ambos
             ArrayList<MiError> errores = new ArrayList<>();
-            errores.addAll(AnalizadorLenguaje.getErrores());
+            errores.addAll(AnalizadorLenguaje.errores);
             if (!errores.isEmpty()) {
                 new TablaErrores(errores).setVisible(true);
             } else {
@@ -259,7 +279,7 @@ public class Principal extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "No hay errores para mostrar");
-        }*/
+        }
         
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -281,6 +301,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TablaErrores(AnalizadorLenguaje.errores).setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Graficar();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,6 +345,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -371,6 +396,42 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
+    private void Graficar() {
+        MyTab mytab = ((MyTab) pestañas.getSelectedComponent());
+        if (mytab.isEmptyText()) {
+            JOptionPane.showMessageDialog(this, "No hay código para analizar");
+            return;
+        }
+
+        tx_consola.setText("");
+        //obteniendo texto   
+        System.out.println("ANALIZANDO......");
+        MyTab t = (MyTab) pestañas.getSelectedComponent();
+        tx_consola.setText("");
+        //obteniendo texto   
+      //  System.out.println("ANALIZANDO......");
+        AnalizadorLenguaje.getInstancia();
+        AnalizadorLenguaje.LimpiarInstancia();
+        String response = AnalizadorLenguaje.getDot(t.getText());
+        if (!response.equals("")) {
+            try ( //escribirMensajeEnConsola(response);
+                    FileWriter fr = new FileWriter("ast.txt")) {
+                    fr.write(response);
+                    fr.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            escribirInformacionExitoEnConsola("Finalizado con éxito");
+        } else {
+           // System.out.println("Código con errores sintácticos-léxicos");
+            escribirErrorEnConsola("Finalizado con errores");
+            AnalizadorLenguaje.errores.stream().forEach((er) -> {
+                escribirErrorEnConsola(er.toString());
+            });
+        }
+    }
+
+    
     //PESTAÑAS
     private void nuevaPestaña(String texto, String titulo, String path) {
         pestañas.add(new MyTab(texto, path), titulo);

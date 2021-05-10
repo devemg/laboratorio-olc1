@@ -57,7 +57,7 @@ public class LlamadaMetodo extends Sentencia{
     
         @Override
     public void getCodigoGraph(StringBuilder builder) {
-        builder.append(this.hashCode()).append("[label=\"").append(this.nombre.hashCode()).append("\"];");
+        builder.append(this.hashCode()).append("[label=\"").append(this.nombre).append("\"];\n");
         // graficando sentencias de método 
         
         if("print".equals(nombre.toLowerCase())){

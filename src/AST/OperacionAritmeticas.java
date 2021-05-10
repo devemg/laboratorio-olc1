@@ -81,7 +81,7 @@ public class OperacionAritmeticas extends Expresion {
             case NUMERO:
             case BOOLEANO:
             case CADENA:
-                builder.append(this.hashCode()).append("[label=\"").append(valor.replace("\"", "")).append("\"];").append("\n");
+                builder.append(this.hashCode()).append("[label=\"").append(valor.replace("\"", "\\\"")).append("\"];").append("\n");
                 break;
             case ID:
                 builder.append(this.hashCode()).append("[label=\"ID\"];").append("\n");

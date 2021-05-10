@@ -18,48 +18,78 @@ import java.util.ArrayList;
  * @author Emely
  */
 public class AnalizadorLenguaje {
+
     private static AnalizadorLenguaje analizador;
     public static ArrayList<Sentencia> sentencias;
-    public static ListaErrores errores; 
-    public static ArrayList<Metodo> listaMetodos; 
-    
-    
- public static boolean AnalizarCodigo(String entrada, String ubicacion) {
+    public static ListaErrores errores;
+    public static ArrayList<Metodo> listaMetodos;
+
+    public static boolean AnalizarCodigo(String entrada, String ubicacion) {
         try {
             Sintactico sin = new Sintactico(
                     new Lexico(new BufferedReader(new StringReader(entrada))));
             //analizando
             sin.parse();
             StringBuilder graph = new StringBuilder();
-            if(AnalizadorLenguaje.listaMetodos != null){
-            
-                for(Metodo t : listaMetodos) {
-                    if("main".equals(t.getNombre())){
-                            int i; 
-                            TablaSimbolos global = new TablaSimbolos(null);
-                            for(i = 0; i< t.getSentencias().size(); i++){
-                                t.getSentencias().get(i).getCodigoGraph(graph);
-                               t.getSentencias().get(i).Ejecutar(global);
-                            }
-                            break;
+            if (AnalizadorLenguaje.listaMetodos != null) {
+
+                for (Metodo t : listaMetodos) {
+                    if ("main".equals(t.getNombre())) {
+                        int i;
+                        TablaSimbolos global = new TablaSimbolos(null);
+                        for (i = 0; i < t.getSentencias().size(); i++) {
+                            t.getSentencias().get(i).getCodigoGraph(graph);
+                            t.getSentencias().get(i).Ejecutar(global);
+                        }
+                        break;
                     }
                 }
-                System.out.println(graph.toString().replace(".", "").replace("@", ""));        
-            System.out.println("Sin errores");
-            }else {
-                throw  new Exception("No hay sentencias reconocidas");
+                System.out.println(graph.toString().replace(".", "").replace("@", ""));
+                System.out.println("Sin errores");
+            } else {
+                throw new Exception("No hay sentencias reconocidas");
             }
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
         }
-        
-        if(AnalizadorLenguaje.errores.size() > 0){
+
+        if (AnalizadorLenguaje.errores.size() > 0) {
             return false;
         }
-       return true;
+        return true;
     }
 
- 
+    public static String getDot(String entrada) {
+            StringBuilder graph = new StringBuilder();
+            graph.append("digraph G { \n");
+        try {
+            Sintactico sin = new Sintactico(
+                    new Lexico(new BufferedReader(new StringReader(entrada))));
+            //analizando
+            sin.parse();
+            if (AnalizadorLenguaje.listaMetodos != null) {
+                for (Metodo t : listaMetodos) {
+                    if ("main".equals(t.getNombre())) {
+                         graph.append(t.hashCode()).append("[label=\"main\"];\n");
+                         int i;
+                    for (i = 0; i < t.getSentencias().size(); i++) {
+                        t.getSentencias().get(i).getCodigoGraph(graph);
+                        graph.append(t.hashCode()).append("->").append(t.getSentencias().get(i).hashCode()).append(";\n");
+         }
+                        break;
+                    }
+                }
+                System.out.println("Sin errores");
+            } else {
+                throw new Exception("No hay sentencias reconocidas");
+            }
+        } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
+        }
+        graph.append("} \n");
+        return graph.toString();
+    }
+
     public static AnalizadorLenguaje getInstancia() {
         if (analizador == null) {
             analizador = new AnalizadorLenguaje();
@@ -73,7 +103,7 @@ public class AnalizadorLenguaje {
         if (analizador != null) {
             errores.clear();
             listaMetodos.clear();
-           } else {
+        } else {
             System.out.println("No existe un analizador");
         }
     }
