@@ -44,7 +44,15 @@ public class While extends Sentencia {
 
     @Override
     public void getCodigoGraph(StringBuilder builder) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        builder.append(this.hashCode()).append("[label=\"While\"];\n");
+        this.condicion.getCodigoGraph(builder);
+        builder.append(this.hashCode()).append("12345555").append("[label=\"Sentencias\"];\n");
+        builder.append(this.hashCode()).append("->").append(this.condicion.hashCode()).append(";\n");
+        builder.append(this.hashCode()).append("->").append(this.hashCode()).append("12345555").append(";\n");
+        this.sentencias.forEach((t) -> {
+            t.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append("12345555").append("->").append(t.hashCode()).append(";\n");
+        });
     }
 
     /**
