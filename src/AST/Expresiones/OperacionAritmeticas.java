@@ -5,8 +5,6 @@
  */
 package AST.Expresiones;
 
-import AST.Expresiones.TipoOperacion;
-import AST.Expresiones.Expresion;
 import AST.Errores.MiError;
 import AST.Errores.TipoError;
 import AST.Simbolos.TablaSimbolos;

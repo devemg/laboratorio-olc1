@@ -44,14 +44,23 @@ public class Condicion extends Expresion {
         }
     }
     
+        @Override
     public void getCodigoGraph(StringBuilder builder) {
-      /*  builder.append(this).append("[label=\"OperacionAritmetica\"];");
-        this.izq.getCodigoGraph(builder);
-        builder.append(this).append(valor).append("[label=\"").append(this.tipo.toString()).append("\"];");
-        this.der.getCodigoGraph(builder);
-        builder.append(this).append("->").append(this.izq).append(";");
-        builder.append(this).append("->").append(this).append(valor).append(";");
-        builder.append(this).append("->").append(this.der).append(";");*/
+                builder.append(this.hashCode()).append("[label=\"Condicion\"];").append("\n");
+            this.izq.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append(this.tipo.hashCode())
+                    .append("[label=\"")
+                    .append(this.tipo.toString())
+                    .append("\"];")
+                    .append("\n");
+            this.der.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append("->").append(this.izq.hashCode()).append(";").append("\n");
+            builder.append(this.hashCode()).append("->").append(this.hashCode()).append(this.tipo.hashCode())
+                    .append(";").append("\n");
+            builder.append(this.hashCode())
+                    .append("->")
+                    .append(this.der.hashCode())
+                    .append(";").append("\n"); 
     }
     
     /**

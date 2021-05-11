@@ -50,13 +50,19 @@ public class If extends Sentencia{
     
         @Override
     public void getCodigoGraph(StringBuilder builder) {
-      /*  builder.append(this).append("[label=\"OperacionAritmetica\"];");
-        this.izq.getCodigoGraph(builder);
-        builder.append(this).append(valor).append("[label=\"").append(this.tipo.toString()).append("\"];");
-        this.der.getCodigoGraph(builder);
-        builder.append(this).append("->").append(this.izq).append(";");
-        builder.append(this).append("->").append(this).append(valor).append(";");
-        builder.append(this).append("->").append(this.der).append(";");*/
+        builder.append(this.hashCode()).append("[label=\"If\"];\n");
+        builder.append(this.hashCode()).append("1111").append("[label=\"Verdadero\"];\n");
+        builder.append(this.hashCode()).append("0000").append("[label=\"Falso\"];\n");
+        builder.append(this.hashCode()).append("->").append(this.hashCode()).append("1111").append(";\n");
+        builder.append(this.hashCode()).append("->").append(this.hashCode()).append("0000").append(";\n");
+        this.listaVerdadero.forEach((t) -> {
+            t.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append("1111").append("->").append(t.hashCode()).append(";\n");
+        });
+        this.listaFalso.forEach((t) -> {
+            t.getCodigoGraph(builder);
+            builder.append(this.hashCode()).append("0000").append("->").append(t.hashCode()).append(";\n");
+        });   
     }
     
 }
