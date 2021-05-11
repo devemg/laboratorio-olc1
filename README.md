@@ -137,7 +137,7 @@ func < identificador > (){
 ##### Llamada a método 
 Es la sentencia que invoca la ejecución de una función. Por medio de esta se asignan valores a los parámetros si es que los hay.
 ```
-< identificador > ( < LISTA_EXPRESIONES > );
+< identificador > ( );
 ```
 
 ## Diagrama de clases 
