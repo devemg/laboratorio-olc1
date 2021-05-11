@@ -19,6 +19,7 @@ import AST.Sentencias.If;
 import AST.Sentencias.Incremento;
 import AST.Sentencias.LlamadaMetodo;
 import AST.Sentencias.Sentencia;
+import AST.Sentencias.While;
 import AST.Simbolos.TipoDatoSimbolo;
 import java_cup.runtime.*;
 import java.util.ArrayList;
@@ -123,7 +124,8 @@ SENTENCIA ::= DECLARACION :a {: RESULT = a; :}
 ;
 
 SENTENCIACC::=  IFELSE:a {: RESULT = a; :}
-|FOR:a {: RESULT = a; :};
+|FOR:a {: RESULT = a; :}
+|WHILE:a {: RESULT = a; :};
 
 BLOQUESENTENCIAS::= llave1 SENTENCIAS:a llave2 {: RESULT = a; :}
     |llave1  llave2{: RESULT = new ArrayList<>(); :};
@@ -134,7 +136,9 @@ RESULT = new For(a,b,c,d,zleft,zright);
 
 INCREMENTO::= identificador:a mas mas {:RESULT = new Incremento(a,aleft,aright);:};
 
-WHILE::= pr_while par1 CONDICION par2 BLOQUESENTENCIAS;
+WHILE::= pr_while:z par1 CONDICION:a par2 BLOQUESENTENCIAS:b {:
+RESULT = new While(a,b,zleft,zright);
+:};
 
 IFELSE::= pr_if par1 CONDICION:a par2 BLOQUESENTENCIAS:b {:RESULT = new If(a,b,aleft, aright); :}
     |pr_if par1 CONDICION:a par2 BLOQUESENTENCIAS:b pr_else BLOQUESENTENCIAS:c 
