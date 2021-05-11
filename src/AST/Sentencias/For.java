@@ -50,9 +50,18 @@ public class For extends Sentencia {
     @Override
     public void getCodigoGraph(StringBuilder builder) {
         builder.append(this.hashCode()).append("[label=\"For\"];\n");
+        builder.append(this.hashCode()).append("12345555").append("[label=\"Sentencias\"];\n");
+        this.asignacion.getCodigoGraph(builder);
+        this.condicion.getCodigoGraph(builder);
+        this.cambio.getCodigoGraph(builder);
+        builder.append(this.hashCode()).append("->").append(this.asignacion.hashCode()).append(";\n");
+        builder.append(this.hashCode()).append("->").append(this.condicion.hashCode()).append(";\n");
+        builder.append(this.hashCode()).append("->").append(this.cambio.hashCode()).append(";\n");
+        
+        builder.append(this.hashCode()).append("->").append(this.hashCode()).append("12345555").append(";\n");
         this.sentencias.forEach((t) -> {
             t.getCodigoGraph(builder);
-            builder.append(this.hashCode()).append("->").append(t.hashCode()).append(";\n");
+            builder.append(this.hashCode()).append("12345555").append("->").append(t.hashCode()).append(";\n");
         });
     }
 

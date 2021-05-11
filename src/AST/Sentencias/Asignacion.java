@@ -38,9 +38,9 @@ public class Asignacion extends Sentencia {
     
     public void getCodigoGraph(StringBuilder builder) {
         builder.append(this.hashCode()).append("[label=\"Asignacion\"];");
-        builder.append(this.nombre.hashCode()).append("[label=\"").append(nombre.hashCode()).append("\"];\n");
+        builder.append(this.hashCode()).append(this.nombre.hashCode()).append("[label=\"").append(nombre).append("\"];\n");
         this.expresion.getCodigoGraph(builder);
-        builder.append(this.hashCode()).append("->").append(this.nombre.hashCode()).append(";");
+        builder.append(this.hashCode()).append("->").append(this.hashCode()).append(this.nombre.hashCode()).append(";");
         builder.append(this.hashCode()).append("->").append(this.expresion.hashCode()).append(";");
     }
     
