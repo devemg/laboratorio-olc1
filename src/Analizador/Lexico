@@ -58,7 +58,6 @@ BLANCOS=[ \t\r\f\n]+
 "else" {return new Symbol(sym.pr_else,yyline,yychar, yytext());} 
 "for" {return new Symbol(sym.pr_for,yyline,yychar, yytext());} 
 "while" {return new Symbol(sym.pr_while,yyline,yychar, yytext());} 
-"print" {return new Symbol(sym.pr_print,yyline,yychar, yytext());} 
 "func" {return new Symbol(sym.pr_func,yyline,yychar, yytext());} 
 
 \n {yychar=1;}

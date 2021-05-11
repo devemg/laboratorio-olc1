@@ -32,11 +32,20 @@ terminal par1,par2;
 terminal mayor,menor,igual,not;
 terminal puntoycoma,llave1,llave2,coma;
 
-terminal String pr_if,pr_else,pr_print, pr_for, pr_while, pr_number, pr_boolean, pr_string, pr_func;
+terminal String pr_if,pr_else, pr_for, pr_while, pr_number, pr_boolean, pr_string, pr_func;
 terminal String entero,decimal,cadena,identificador;
-non terminal INICIO,EXPRESION,VALOR,CONDICION;
-non terminal SENTENCIAS, SENTENCIA,SENTENCIACONTROL,DECLARACION,ASIGNACION,TIPODATO,LLAMADAMF,LISTAPARAMS,IFELSE;
-non terminal BLOQUESENTENCIAS, FOR, WHILE, INCREMENTO, FUNCION;
+non terminal INICIO;
+non terminal EXPRESION,VALOR;
+non terminal CONDICION;
+non terminal SENTENCIA,DECLARACION,ASIGNACION,LLAMADAMF,LISTAPARAMS,IFELSE;
+non terminal SENTENCIACC;
+non terminal TIPODATO;
+non terminal FOR, WHILE, INCREMENTO;
+non terminal FUNCION;
+non terminal LISTAFUNC;
+non terminal BLOQUESENTENCIAS,SENTENCIAS;
+
+
 //precedencia
 precedence left mayor,menor,igual;
 precedence right not;
@@ -47,20 +56,25 @@ precedence left por,div;
 
 start with INICIO;
 
-INICIO ::= FUNCION;
+INICIO ::= LISTAFUNC;
+
+LISTAFUNC::= LISTAFUNC:l FUNCION:a
+| FUNCION:a
+| DECLARACION puntoycoma;
 
 FUNCION::= pr_func identificador par1 par2 BLOQUESENTENCIAS;
 
 
 SENTENCIAS ::= SENTENCIAS SENTENCIA puntoycoma
 |SENTENCIA puntoycoma
-|SENTENCIACONTROL;
+|SENTENCIAS SENTENCIACC
+|SENTENCIACC;
 
 SENTENCIA ::= DECLARACION
     | ASIGNACION
     | LLAMADAMF;
 
-SENTENCIACONTROL ::= IFELSE
+SENTENCIACC ::= IFELSE
     | FOR
     | WHILE;
 
@@ -94,13 +108,13 @@ EXPRESION::=EXPRESION:a mas:c EXPRESION:b
     |EXPRESION:a menos:c EXPRESION:b
     |EXPRESION:a div:c EXPRESION:b
     |EXPRESION:a por:c EXPRESION:b
+    |CONDICION:a
     |VALOR:a;
 
 CONDICION::= EXPRESION:a mayor:c EXPRESION:b
     |EXPRESION:a menor:c EXPRESION:b
     |EXPRESION:a igual:c igual EXPRESION:b
-    |EXPRESION:a not:c igual EXPRESION:b
-    |VALOR;
+    |EXPRESION:a not:c igual EXPRESION:b;
 
 
 VALOR ::= cadena
