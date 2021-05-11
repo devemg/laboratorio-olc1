@@ -126,10 +126,9 @@ while (< CONDICION > ){
 ```
 
 #### Metodos
-Un método es una subrutina de código que se identifica con un nombre, tipo y un conjunto 
-de parámetros. No retorna ningún valor.
+Un método es una subrutina de código que se identifica con un nombre. No retorna ningún valor ni recibe nigun parámetro.
 ```
-func < identificador > (< LISTA_DECLARACION_PARAMETROS >){
+func < identificador > (){
 // lista de sentencias
 }
 ```
