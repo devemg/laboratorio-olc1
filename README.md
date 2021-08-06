@@ -5,8 +5,7 @@ Interprete de ejemplo. Laboratorio OLC1 1s 2021
 - master: Contiene la implementación completa
 - interfaz-grafica: Contiene solamente la interfaz gráfica en java
 - gramatica: Contiene la implementación de la gramática. 
-- ast: Contiene los avances de la construcción y ejecución del AST construído.
-
+- 
 ## Características 
 
 ### Tipado 
