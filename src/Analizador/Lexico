@@ -12,14 +12,14 @@ import AST.Errores.*;
 %class Lexico
 %public 
 %line 
-%char 
+%column 
 %cup 
 %unicode
 %ignorecase
 
 %init{ 
     yyline = 1; 
-    yychar = 1; 
+    yycolumn = 1; 
 %init} 
 
 LETRA =[a-zA-ZÑñ]+
@@ -53,27 +53,27 @@ BLANCOS=[ \t\r\f\n]+
 "," {return new Symbol(sym.coma,yycolumn,yyline,yytext());}
 
 
-"number" {return new Symbol(sym.pr_number,yyline,yychar, yytext());} 
-"boolean" {return new Symbol(sym.pr_boolean,yyline,yychar, yytext());} 
-"string" {return new Symbol(sym.pr_string,yyline,yychar, yytext());} 
+"number" {return new Symbol(sym.pr_number,yyline,yycolumn, yytext());} 
+"boolean" {return new Symbol(sym.pr_boolean,yyline,yycolumn, yytext());} 
+"string" {return new Symbol(sym.pr_string,yyline,yycolumn, yytext());} 
 
-"if" {return new Symbol(sym.pr_if,yyline,yychar, yytext());} 
-"else" {return new Symbol(sym.pr_else,yyline,yychar, yytext());} 
-"for" {return new Symbol(sym.pr_for,yyline,yychar, yytext());} 
-"while" {return new Symbol(sym.pr_while,yyline,yychar, yytext());} 
-"func" {return new Symbol(sym.pr_func,yyline,yychar, yytext());} 
+"if" {return new Symbol(sym.pr_if,yyline,yycolumn, yytext());} 
+"else" {return new Symbol(sym.pr_else,yyline,yycolumn, yytext());} 
+"for" {return new Symbol(sym.pr_for,yyline,yycolumn, yytext());} 
+"while" {return new Symbol(sym.pr_while,yyline,yycolumn, yytext());} 
+"func" {return new Symbol(sym.pr_func,yyline,yycolumn, yytext());} 
 
-\n {yychar=1;}
+\n {}
 
 {BLANCOS} {} 
-{ENTERO} {return new Symbol(sym.entero,yyline,yychar, yytext());} 
-{DECIMAL} {return new Symbol(sym.decimal,yyline,yychar, yytext());} 
-{CADENA} {return new Symbol(sym.cadena,yyline,yychar, yytext());} 
+{ENTERO} {return new Symbol(sym.entero,yyline,yycolumn, yytext());} 
+{DECIMAL} {return new Symbol(sym.decimal,yyline,yycolumn, yytext());} 
+{CADENA} {return new Symbol(sym.cadena,yyline,yycolumn, yytext());} 
 {ID} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
 
 . {
     System.out.println("Este es un error lexico: "+yytext()+
-    ", en la linea: "+yyline+", en la columna: "+yychar);
+    ", en la linea: "+yyline+", en la columna: "+yycolumn);
 AnalizadorLenguaje.errores.add(new MiError(yyline, yycolumn, TipoError.LEXICO, 
             "Se detectó un error léxico (caracter "+yytext()+")"));
 }
