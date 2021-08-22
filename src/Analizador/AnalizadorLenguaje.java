@@ -24,6 +24,8 @@ public class AnalizadorLenguaje {
     public static ListaErrores errores;
     public static ArrayList<Metodo> listaMetodos;
 
+    private AnalizadorLenguaje() { }
+    
     public static boolean AnalizarCodigo(String entrada, String ubicacion) {
         try {
             Sintactico sin = new Sintactico(
